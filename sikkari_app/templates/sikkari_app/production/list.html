@@ -1,0 +1,76 @@
+<!-- templates/sikkari_app/production/list.html -->
+{% extends 'sikkari_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>生産管理</h1>
+
+    <!-- フィルターフォーム -->
+    <div class="filter-section">
+        <form method="get" class="filter-form">
+            {{ filter_form.search }}
+            {{ filter_form.date_from }}
+            {{ filter_form.date_to }}
+            <div class="checkbox-group">
+                {{ filter_form.show_completed }}
+                <label for="{{ filter_form.show_completed.id_for_label }}">
+                    完了済みを含む
+                </label>
+            </div>
+            <button type="submit" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:production_list' %}" class="reset-btn">リセット</a>
+        </form>
+    </div>
+
+    <!-- 新規作成ボタン -->
+    <div class="action-buttons">
+        <a href="{% url 'sikkari_app:production_create' %}" class="create-btn">新規作成</a>
+    </div>
+
+    <!-- データ一覧 -->
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>製品コード</th>
+                <th>製品名</th>
+                <th>ロット番号</th>
+                <th>注文日</th>
+                <th>製造開始日</th>
+                <th>製造完了予定日</th>
+                <th>状態</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for production in productions %}
+            <tr>
+                <td>{{ production.product_code }}</td>
+                <td>{{ production.product_name }}</td>
+                <td>{{ production.lot_number }}</td>
+                <td>{{ production.order_date|date:"Y/m/d H:i" }}</td>
+                <td>{{ production.manufacture_date|date:"Y/m/d H:i" }}</td>
+                <td>{{ production.manufacture_completion_date|date:"Y/m/d H:i" }}</td>
+                <td>
+                  {% if production.status == 'completed' %}
+                      <span class="status-completed">完了</span>
+                  {% elif production.status == 'in_progress' %}
+                      <span class="status-in-progress">進行中</span>
+                  {% else %}
+                      <span class="status-pending">未着手</span>
+                  {% endif %}
+              </td>                <td class="action-cell">
+                    <a href="{% url 'sikkari_app:production_update' production.id %}" class="edit-btn">編集</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="empty-message">データがありません</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    {% include 'sikkari_app/common/pagination.html' %}
+</div>
+{% endblock %}

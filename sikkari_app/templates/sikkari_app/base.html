@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>業務管理システム</title>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <nav class="nav-bar">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <h1 class="site-title">業務管理システム</h1>
+                </div>
+                {% if request.session.employee_id %}
+                <div class="nav-right">
+                    <span class="user-info">{{ request.session.employee_name }} ({{ request.session.department_name }})</span>
+                    <a href="{% url 'sikkari_app:menu' %}" class="nav-link">メニュー</a>
+                    <a href="{% url 'sikkari_app:logout' %}" class="nav-link">ログアウト</a>
+                </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 業務管理システム</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!-- templates/sikkari_app/product/list.html -->
+{% extends 'sikkari_app/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+    <h1>製品管理</h1>
+
+    <!-- フィルターフォーム -->
+    <div class="filter-section">
+        <form method="get" class="filter-form">
+            {{ filter_form.search }}
+            {{ filter_form.price_min }}
+            {{ filter_form.price_max }}
+            <button type="submit" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:product_list' %}" class="reset-btn">リセット</a>
+        </form>
+    </div>
+
+    <!-- 新規作成ボタン -->
+    <div class="action-buttons">
+        <a href="{% url 'sikkari_app:product_create' %}" class="create-btn">新規作成</a>
+    </div>
+
+    <!-- データ一覧 -->
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>製品コード</th>
+                <th>製品名</th>
+                <th>製品単価</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+              <td>{{ product.product_code }}</td>
+              <td>{{ product.product_name }}</td>
+              <td>¥{{ product.unit_price|intcomma }}</td>
+              <td class="action-cell">
+                  <a href="{% url 'sikkari_app:product_update' product.id %}" class="edit-btn">編集</a>
+                  <button onclick="showDeleteModal('{{ product.id }}')" class="delete-btn">削除</button>
+              </td>
+          </tr>
+          {% empty %}
+          <tr>
+              <td colspan="4" class="empty-message">データがありません</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    {% include 'sikkari_app/common/pagination.html' %}
+</div>
+
+<!-- 削除確認モーダル -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h2>削除確認</h2>
+        <p>この製品を削除してもよろしいですか？</p>
+        <div class="modal-buttons">
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <button type="submit" class="confirm-btn">削除</button>
+                <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function showDeleteModal(id) {
+    document.getElementById('deleteModal').style.display = 'flex';
+    document.getElementById('deleteForm').action = "{% url 'sikkari_app:product_delete' 0 %}".replace('0', id);
+}
+
+function closeModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+}
+</script>
+{% endblock %}

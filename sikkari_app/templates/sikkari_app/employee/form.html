@@ -1,0 +1,24 @@
+<!-- templates/sikkari_app/order/form.html -->
+{% extends 'sikkari_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ title }}</h1>
+    <form method="post" class="data-form">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="error-message">{{ field.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="form-buttons">
+            <button type="submit" class="submit-btn">保存</button>
+            <a href="{% url 'sikkari_app:employee_list' %}" class="cancel-btn">キャンセル</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

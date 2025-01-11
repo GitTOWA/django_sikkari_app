@@ -1,0 +1,52 @@
+<!-- templates/sikkari_app/shipment/list.html -->
+{% extends 'sikkari_app/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+    <h1>入出荷管理</h1>
+
+    <!-- フィルターフォーム -->
+    <div class="filter-section">
+        <form method="get" class="filter-form">
+            {{ filter_form.search }}
+            {{ filter_form.date_from }}
+            {{ filter_form.date_to }}
+            {{ filter_form.shipment_type }}
+            <button type="submit" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:shipment_list' %}" class="reset-btn">リセット</a>
+        </form>
+    </div>
+
+    <!-- データ一覧 -->
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>製品コード</th>
+                <th>製品名</th>
+                <th>区分</th>
+                <th>数量</th>
+                <th>日時</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shipment in shipments %}
+            <tr>
+                <td>{{ shipment.product_code }}</td>
+                <td>{{ shipment.product_name }}</td>
+                <td>{{ shipment.get_shipment_type_display }}</td>
+                <td>{{ shipment.quantity|intcomma }}</td>
+                <td>{{ shipment.shipment_date|date:"Y/m/d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty-message">データがありません</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    {% include 'sikkari_app/common/pagination.html' %}
+</div>
+{% endblock %}

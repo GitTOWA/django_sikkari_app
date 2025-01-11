@@ -1,0 +1,47 @@
+<!-- templates/sikkari_app/stock/list.html -->
+{% extends 'sikkari_app/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<div class="container">
+    <h1>在庫管理</h1>
+
+    <!-- フィルターフォーム -->
+    <div class="filter-section">
+        <form method="get" class="filter-form">
+            {{ filter_form.search }}
+            {{ filter_form.stock_min }}
+            {{ filter_form.stock_max }}
+            <button type="submit" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:stock_list' %}" class="reset-btn">リセット</a>
+        </form>
+    </div>
+
+    <!-- データ一覧 -->
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>製品コード</th>
+                <th>製品名</th>
+                <th>在庫数</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.product_code }}</td>
+                <td>{{ stock.product_name }}</td>
+                <td>{{ stock.stock_number|intcomma }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="empty-message">データがありません</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    {% include 'sikkari_app/common/pagination.html' %}
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+<!-- templates/sikkari_app/order/list.html -->
+{% extends 'sikkari_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>受注情報一覧</h1>
+
+    <!-- フィルターフォーム -->
+    <div class="filter-section">
+        <form method="get" class="filter-form">
+            {{ filter_form.search }}
+            {{ filter_form.date_from }}
+            {{ filter_form.date_to }}
+            {{ filter_form.order_status }}
+            <button type="submit" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:order_list' %}" class="reset-btn">リセット</a>
+        </form>
+    </div>
+
+    <!-- 新規作成ボタン -->
+    <div class="action-buttons">
+        <a href="{% url 'sikkari_app:order_create' %}" class="create-btn">新規作成</a>
+    </div>
+
+    <!-- データ一覧 -->
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>受注コード</th>
+                <th>顧客名</th>
+                <th>製品名</th>
+                <th>注文数</th>
+                <th>注文日</th>
+                <th>予定納期</th>
+                <th>実績納期</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+                <td>{{ order.order_code }}</td>
+                <td>{{ order.customer_name }}</td>
+                <td>{{ order.product_name }}</td>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.order_date|date:"Y/m/d" }}</td>
+                <td>{{ order.expected_delivery_date|date:"Y/m/d" }}</td>
+                <td>{{ order.delivery_date|date:"Y/m/d"|default:"-" }}</td>
+                <td class="action-cell">
+                  {% if order.id %}  <!-- IDの存在を確認 -->
+                      <a href="{% url 'sikkari_app:order_update' pk=order.id %}" class="edit-btn">編集</a>
+                      <button onclick="showDeleteModal('{{ order.id }}')" class="delete-btn">削除</button>
+                  {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="empty-message">データがありません</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    {% include 'sikkari_app/common/pagination.html' %}
+
+<!-- 削除確認モーダル -->
+<div id="deleteModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <h2>削除確認</h2>
+      <p>この受注情報を削除してもよろしいですか？</p>
+      <div class="modal-buttons">
+          <form id="deleteForm" method="post">
+              {% csrf_token %}
+              <button type="submit" class="confirm-btn">削除</button>
+              <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
+          </form>
+      </div>
+  </div>
+</div>
+<!-- templates/sikkari_app/order/list.html のJavaScript部分 -->
+<script>
+  function showDeleteModal(orderId) {
+      const modal = document.getElementById('deleteModal');
+      const form = document.getElementById('deleteForm');
+      modal.style.display = 'flex';  // 'block'から'flex'に変更
+      form.action = "{% url 'sikkari_app:order_delete' 0 %}".replace('0', orderId);
+  }
+  
+  function closeModal() {
+      document.getElementById('deleteModal').style.display = 'none';
+  }
+  </script>{% endblock %}

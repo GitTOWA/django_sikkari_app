@@ -1,0 +1,40 @@
+<!-- templates/sikkari_app/login.html -->
+{% extends 'sikkari_app/base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h1>ログイン</h1>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error-message">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label for="{{ form.employee_code.id_for_label }}">従業員番号</label>
+                {{ form.employee_code }}
+                {% if form.employee_code.errors %}
+                    <div class="field-error">
+                        {{ form.employee_code.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">パスワード</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="field-error">
+                        {{ form.password.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit">ログイン</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

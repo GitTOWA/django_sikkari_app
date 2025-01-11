@@ -1,0 +1,29 @@
+<!-- templates/sikkari_app/menu.html -->
+{% extends 'sikkari_app/base.html' %}
+
+{% block content %}
+<div class="menu-container">    
+    <div class="systems-menu">
+        {% for system_name, functions in systems.items %}
+            <div class="system-block">
+                <h2>{{ system_name }}</h2>
+                <div class="functions-list">
+                  {% for function in functions %}
+                  <div class="function-item">
+                      {% if function.url == '#' %}
+                          <a href="#" class="function-link disabled">
+                              {{ function.name }} (準備中)
+                          </a>
+                      {% else %}
+                          <a href="{% url 'sikkari_app:'|add:function.url %}" class="function-link">
+                              {{ function.name }}
+                          </a>
+                      {% endif %}
+                  </div>
+              {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
