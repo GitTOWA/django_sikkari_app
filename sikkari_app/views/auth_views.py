@@ -4,10 +4,10 @@ from django.contrib.auth.hashers import check_password
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from sikkari_app.models import Employee
-from sikkari_app.forms.auth import LoginForm  # パスを修正
+from sikkari_app.forms.auth import LoginForm
 
 class LoginView(FormView):
-    template_name = 'sikkari_app/login.html'
+    template_name = 'sikkari_app/auth/login.html'
     form_class = LoginForm
     success_url = reverse_lazy('sikkari_app:menu')
 

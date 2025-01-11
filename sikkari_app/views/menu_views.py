@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 
 class MenuView(TemplateView):
-    template_name = 'sikkari_app/menu.html'
+    template_name = 'sikkari_app/menu/menu.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,7 +28,7 @@ class MenuView(TemplateView):
             '人事部': {
                 '従業員管理システム': [
                     {'name': '従業員情報', 'url': 'employee_list'},
-                    {'name': '所属部署情報', 'url': '#'}
+                    {'name': '所属部署情報', 'url': 'department_list'}
                 ]
             },
             '製造部': {

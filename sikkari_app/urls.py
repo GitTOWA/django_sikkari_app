@@ -9,6 +9,7 @@ from .views.product_views import Product, ProductCreateView, ProductDeleteView, 
 from .views.stock_views import Stock, StockFilterForm, StockListView
 from .views.shipment_views import Shipment, ShipmentFilterForm, ShipmentListView
 from .views.employee_views import Employee, EmployeeCreateView, EmployeeDeleteView, EmployeeFilterForm, EmployeeForm, EmployeeListView, EmployeeUpdateView
+from .views.department_views import Department, DepartmentCreateView, DepartmentDeleteView, DepartmentListView, DepartmentUpdateView
 
 app_name = 'sikkari_app'
 
@@ -72,4 +73,12 @@ urlpatterns += [
   path('employees/create/', EmployeeCreateView.as_view(), name='employee_create'),
   path('employees/<int:pk>/update/', EmployeeUpdateView.as_view(), name='employee_update'),
   path('employees/<int:pk>/delete/', EmployeeDeleteView.as_view(), name='employee_delete'),
+]
+
+# 所属部署管理
+urlpatterns += [
+    path('departments/', DepartmentListView.as_view(), name='department_list'),
+    path('departments/create/', DepartmentCreateView.as_view(), name='department_create'),
+    path('departments/<int:pk>/update/', DepartmentUpdateView.as_view(), name='department_update'),
+    path('departments/<int:pk>/delete/', DepartmentDeleteView.as_view(), name='department_delete'),
 ]

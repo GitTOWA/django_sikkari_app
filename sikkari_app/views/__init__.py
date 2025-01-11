@@ -9,6 +9,7 @@ from .product_views import Product, ProductCreateView, ProductDeleteView, Produc
 from .production_views import Production, ProductionCreateView, ProductionFilterForm, ProductionForm, ProductionListView, ProductionUpdateView
 from .shipment_views import Shipment, ShipmentFilterForm, ShipmentListView
 from .stock_views import Stock, StockFilterForm, StockListView
+from .department_views import DepartmentUpdateView, Department, DepartmentCreateView, DepartmentDeleteView, DepartmentListView
 
 __all__ = []
 
@@ -95,4 +96,13 @@ __all__ += [
     'Stock',
     'StockFilterForm',
     'StockListView'
+]
+
+# Department Views
+__all__ += [
+  'DepartmentUpdateView',
+  'Department',
+  'DepartmentCreateView',
+  'DepartmentDeleteView',
+  'DepartmentListView'
 ]
