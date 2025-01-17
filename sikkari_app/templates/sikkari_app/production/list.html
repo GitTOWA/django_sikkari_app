@@ -3,28 +3,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>生産管理</h1>
 
-    <!-- フィルターフォーム -->
-    <div class="filter-section">
-        <form method="get" class="filter-form">
-            {{ filter_form.search }}
-            {{ filter_form.date_from }}
-            {{ filter_form.date_to }}
-            <div class="checkbox-group">
-                {{ filter_form.show_completed }}
-                <label for="{{ filter_form.show_completed.id_for_label }}">
-                    完了済みを含む
-                </label>
-            </div>
-            <button type="submit" class="search-btn">検索</button>
-            <a href="{% url 'sikkari_app:production_list' %}" class="reset-btn">リセット</a>
-        </form>
-    </div>
-
-    <!-- 新規作成ボタン -->
-    <div class="action-buttons">
-        <a href="{% url 'sikkari_app:production_create' %}" class="create-btn">新規作成</a>
+    <div class="content-header">
+        <h1>生産管理</h1>
+        <div class="header-buttons">
+            <button onclick="showSearchModal()" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:puroduction_create' %}" class="create-btn">新規作成</a>
+        </div>
     </div>
 
     <!-- データ一覧 -->
@@ -73,4 +58,16 @@
     <!-- ページネーション -->
     {% include 'sikkari_app/common/pagination.html' %}
 </div>
+{% include 'sikkari_app/modals/production_search.html' %}
+
+<script>
+function showSearchModal() {
+    document.getElementById('searchModal').style.display = 'flex';
+}
+
+function closeSearchModal() {
+    document.getElementById('searchModal').style.display = 'none';
+}
+
+</script>
 {% endblock %}

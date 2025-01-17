@@ -3,11 +3,12 @@
 
 {% block content %}
 <div class="container">
-    <h1>所属部署管理</h1>
 
-    <!-- 新規作成ボタン -->
-    <div class="action-buttons">
-        <a href="{% url 'sikkari_app:department_create' %}" class="create-btn">新規作成</a>
+    <div class="content-header">
+        <h1>所属部署管理</h1>
+        <div class="header-buttons">
+            <a href="{% url 'sikkari_app:department_create' %}" class="create-btn">新規作成</a>
+        </div>
     </div>
 
     <!-- データ一覧 -->

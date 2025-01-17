@@ -1,0 +1,28 @@
+<div id="searchModal" class="modal">
+  <div class="modal-content">
+      <h2>検索条件</h2>
+      <form method="get" class="search-form">
+          <div class="form-group">
+              <label>検索ワード</label>
+              {{ filter_form.search }}
+          </div>
+          <div class="form-group">
+              <label>期間（開始）</label>
+              {{ filter_form.date_from }}
+          </div>
+          <div class="form-group">
+              <label>期間（終了）</label>
+              {{ filter_form.date_to }}
+          </div>
+          <div class="form-group">
+              <label>ステータス</label>
+              {{ filter_form.order_status }}
+          </div>
+          <div class="modal-buttons">
+              <button type="submit" class="search-btn">検索</button>
+              <button type="button" onclick="closeSearchModal()" class="cancel-btn">キャンセル</button>
+              <a href="{% url 'sikkari_app:order_list' %}" class="reset-btn">リセット</a>
+          </div>
+      </form>
+  </div>
+</div>

@@ -4,7 +4,7 @@
 {% block content %}
 <div class="login-container">
     <div class="login-box">
-        <h1>ログイン</h1>
+        <h1 class="login-head">ログイン</h1>
         <form method="post" class="login-form">
             {% csrf_token %}
             {% if form.non_field_errors %}
@@ -14,7 +14,7 @@
             {% endif %}
             
             <div class="form-group">
-                <label for="{{ form.employee_code.id_for_label }}">従業員番号</label>
+                <label for="{{ form.employee_code.id_for_label }}">従業員ID</label>
                 {{ form.employee_code }}
                 {% if form.employee_code.errors %}
                     <div class="field-error">
@@ -32,8 +32,9 @@
                     </div>
                 {% endif %}
             </div>
-
-            <button type="submit">ログイン</button>
+            <div class="login-buton-conteiner">
+                <button class="login-button" type="submit">ログイン</button>
+            </div>
         </form>
     </div>
 </div>

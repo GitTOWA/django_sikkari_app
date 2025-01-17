@@ -1,0 +1,16 @@
+<div id="searchModal" class="modal">
+  <div class="modal-content">
+      <h2>検索条件</h2>
+      <form method="get" class="search-form">
+          <div class="form-group">
+              <label>検索ワード</label>
+              {{ filter_form.search }}
+          </div>
+          <div class="modal-buttons">
+              <button type="submit" class="search-btn">検索</button>
+              <button type="button" onclick="closeSearchModal()" class="cancel-btn">キャンセル</button>
+              <a href="{% url 'sikkari_app:employee_list' %}" class="reset-btn">リセット</a>
+          </div>
+      </form>
+  </div>
+</div>

@@ -4,17 +4,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>在庫管理</h1>
 
-    <!-- フィルターフォーム -->
-    <div class="filter-section">
-        <form method="get" class="filter-form">
-            {{ filter_form.search }}
-            {{ filter_form.stock_min }}
-            {{ filter_form.stock_max }}
-            <button type="submit" class="search-btn">検索</button>
-            <a href="{% url 'sikkari_app:stock_list' %}" class="reset-btn">リセット</a>
-        </form>
+    <div class="content-header">
+        <h1>在庫管理</h1>
+        <div class="header-buttons">
+            <button onclick="showSearchModal()" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:order_create' %}" class="create-btn">新規作成</a>
+        </div>
     </div>
 
     <!-- データ一覧 -->
@@ -44,4 +40,14 @@
     <!-- ページネーション -->
     {% include 'sikkari_app/common/pagination.html' %}
 </div>
+{% include 'sikkari_app/modals/stock_search.html' %}
+<script>
+    function showSearchModal() {
+        document.getElementById('searchModal').style.display = 'flex';
+    }
+    
+    function closeSearchModal() {
+        document.getElementById('searchModal').style.display = 'none';
+    }
+</script>    
 {% endblock %}

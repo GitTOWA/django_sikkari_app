@@ -3,20 +3,13 @@
 
 {% block content %}
 <div class="container">
-    <h1>得意先情報一覧</h1>
 
-    <!-- フィルターフォーム -->
-    <div class="filter-section">
-        <form method="get" class="filter-form">
-            {{ filter_form.search }}
-            <button type="submit" class="search-btn">検索</button>
-            <a href="{% url 'sikkari_app:customer_list' %}" class="reset-btn">リセット</a>
-        </form>
-    </div>
-
-    <!-- 新規作成ボタン -->
-    <div class="action-buttons">
-        <a href="{% url 'sikkari_app:customer_create' %}" class="create-btn">新規作成</a>
+    <div class="content-header">
+        <h1>得意先情報一覧</h1>
+        <div class="header-buttons">
+            <button onclick="showSearchModal()" class="search-btn">検索</button>
+            <a href="{% url 'sikkari_app:customer_create' %}" class="create-btn">新規作成</a>
+        </div>
     </div>
 
     <!-- データ一覧 -->
@@ -54,10 +47,10 @@
         </tbody>
     </table>
 
-    <!-- ページネーション -->
     {% include 'sikkari_app/common/pagination.html' %}
 </div>
 
+{% include 'sikkari_app/modals/customer_search.html' %}
 <!-- 削除確認モーダル -->
 <div id="deleteModal" class="modal">
     <div class="modal-content">
@@ -66,7 +59,7 @@
         <div class="modal-buttons">
             <form id="deleteForm" method="post">
                 {% csrf_token %}
-                <button type="submit" class="confirm-btn">削除</button>
+                <button type="submit" class="delete-btn">削除</button>
                 <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
             </form>
         </div>
@@ -74,6 +67,14 @@
 </div>
 
 <script>
+function showSearchModal() {
+    document.getElementById('searchModal').style.display = 'flex';
+}
+
+function closeSearchModal() {
+    document.getElementById('searchModal').style.display = 'none';
+}
+
 function showDeleteModal(id) {
     document.getElementById('deleteModal').style.display = 'flex';
     document.getElementById('deleteForm').action = "{% url 'sikkari_app:customer_delete' 0 %}".replace('0', id);
