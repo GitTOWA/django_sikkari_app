@@ -1,0 +1,127 @@
+<!-- templates/sikkari_app/aggregation/customer_product_summary.html -->
+{% extends 'sikkari_app/base.html' %}
+{% load static %}
+{% load humanize %} 
+
+{% block content %}
+<div class="container">
+    <div class="content-header">
+        <h1>得意先・製品別集計</h1>
+        <div class="header-controls">
+            <div class="date-selector">
+                <select id="yearSelect" onchange="changePeriod()">
+                    {% for year_date in years %}
+                        <option value="{{ year_date.year }}" 
+                            {% if year_date.year == current_year %}selected{% endif %}>
+                            {{ year_date.year }}年
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if view_type == 'monthly' %}
+                    <select id="monthSelect" onchange="changePeriod()">
+                        <option value="">全ての月</option>
+                        {% for month in months %}
+                            <option value="{{ month }}" 
+                                {% if month|stringformat:"d" == current_month %}selected{% endif %}>
+                                {{ month }}月
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+            <div class="view-type-selector">
+                <button onclick="changeViewType('yearly')" 
+                        class="view-type-btn {% if view_type == 'yearly' %}active{% endif %}">年次</button>
+                <button onclick="changeViewType('monthly')" 
+                        class="view-type-btn {% if view_type == 'monthly' %}active{% endif %}">月次</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-section">
+        {% if view_type == 'yearly' %}
+            <!-- 年次表示 -->
+            <h2>{{ current_year }}年度 集計</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>得意先名</th>
+                        <th>製品名</th>
+                        <th>注文回数</th>
+                        <th>総数量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in summary %}
+                    <tr>
+                        <td>{{ item.customer_name }}</td>
+                        <td>{{ item.product_name }}</td>
+                        <td class="text-right">{{ item.order_count|default:0 }}</td>
+                        <td class="text-right">{{ item.total_quantity|default:0|intcomma }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="empty-message">データがありません</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <!-- 月次表示 -->
+            <h2>{{ current_year }}年 {% if current_month %}{{ current_month }}月{% endif %} 集計</h2>
+            {% for month, items in summary.items %}
+                <div class="month-section">
+                    <h3>{{ month }}月</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>得意先名</th>
+                                <th>製品名</th>
+                                <th>注文回数</th>
+                                <th>総数量</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>{{ item.customer_name }}</td>
+                                <td>{{ item.product_name }}</td>
+                                <td class="text-right">{{ item.order_count|default:0 }}</td>
+                                <td class="text-right">{{ item.total_quantity|default:0|intcomma }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function changePeriod() {
+    const year = document.getElementById('yearSelect').value;
+    const monthSelect = document.getElementById('monthSelect');
+    const month = monthSelect ? monthSelect.value : '';
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('year', year);
+    if (monthSelect) {
+        if (month) {
+            urlParams.set('month', month);
+        } else {
+            urlParams.delete('month');
+        }
+    }
+    
+    window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
+}
+
+function changeViewType(type) {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('view_type', type);
+    urlParams.delete('month');  // 表示タイプ変更時は月の選択をリセット
+    window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
+}
+</script>
+{% endblock %}

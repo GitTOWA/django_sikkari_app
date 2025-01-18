@@ -10,6 +10,8 @@ from .views.stock_views import Stock, StockFilterForm, StockListView
 from .views.shipment_views import Shipment, ShipmentFilterForm, ShipmentListView
 from .views.employee_views import Employee, EmployeeCreateView, EmployeeDeleteView, EmployeeFilterForm, EmployeeForm, EmployeeListView, EmployeeUpdateView
 from .views.department_views import Department, DepartmentCreateView, DepartmentDeleteView, DepartmentListView, DepartmentUpdateView
+from .views.aggregation_views import CustomerProductSummaryView
+from .views.history_views import OrderHistoryView
 
 app_name = 'sikkari_app'
 
@@ -81,4 +83,14 @@ urlpatterns += [
     path('departments/create/', DepartmentCreateView.as_view(), name='department_create'),
     path('departments/<int:pk>/update/', DepartmentUpdateView.as_view(), name='department_update'),
     path('departments/<int:pk>/delete/', DepartmentDeleteView.as_view(), name='department_delete'),
+]
+
+urlpatterns += [
+    path('aggregation/customer-product/', 
+         CustomerProductSummaryView.as_view(), 
+         name='customer_product_summary'),
+]
+
+urlpatterns += [
+    path('history/order/', OrderHistoryView.as_view(), name='order_history'),
 ]
