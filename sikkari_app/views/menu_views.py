@@ -17,12 +17,6 @@ class MenuView(TemplateView):
                     {'name': '得意先情報', 'url': 'customer_list'},
                     {'name': '得意先・製品別集計', 'url': 'customer_product_summary'},
                     {'name': '得意先・商品別履歴', 'url': 'order_history'}
-                ],
-                '製品管理システム': [
-                    {'name': '生産管理', 'url': 'production_list'},
-                    {'name': '製品管理', 'url': 'product_list'},
-                    {'name': '在庫管理', 'url': 'stock_list'},
-                    {'name': '入出荷管理', 'url': 'shipment_list'}
                 ]
             },
             '人事部': {
