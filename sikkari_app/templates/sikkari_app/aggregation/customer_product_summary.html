@@ -1,4 +1,3 @@
-<!-- templates/sikkari_app/aggregation/customer_product_summary.html -->
 {% extends 'sikkari_app/base.html' %}
 {% load static %}
 {% load humanize %} 
@@ -40,7 +39,6 @@
 
     <div class="summary-section">
         {% if view_type == 'yearly' %}
-            <!-- 年次表示 -->
             <h2>{{ current_year }}年度 集計</h2>
             <table class="data-table">
                 <thead>
@@ -67,7 +65,6 @@
                 </tbody>
             </table>
         {% else %}
-            <!-- 月次表示 -->
             <h2>{{ current_year }}年 {% if current_month %}{{ current_month }}月{% endif %} 集計</h2>
             {% for month, items in summary.items %}
                 <div class="month-section">

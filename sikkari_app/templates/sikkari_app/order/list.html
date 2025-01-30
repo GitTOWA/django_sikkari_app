@@ -1,4 +1,3 @@
-<!-- templates/sikkari_app/order/list.html -->
 {% extends 'sikkari_app/base.html' %}
 
 {% block content %}
@@ -50,12 +49,11 @@
         </table>
     </div>
 
-    <!-- ページネーション -->
     {% include 'sikkari_app/common/pagination.html' %}
 </div>
 
 {% include 'sikkari_app/modals/order_search.html' %}
-<!-- 削除確認モーダル -->
+
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <h2>削除確認</h2>

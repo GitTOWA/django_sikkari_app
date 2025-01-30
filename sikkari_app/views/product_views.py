@@ -13,7 +13,7 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         queryset = Product.objects.all()
-        print("Debug - Products:", list(queryset))  # デバッグ用
+        # print("Debug - Products:", list(queryset))
         form = ProductFilterForm(self.request.GET)
         
         if form.is_valid():
@@ -37,7 +37,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter_form'] = ProductFilterForm(self.request.GET or None)
-        print("Debug - Context:", context)  # デバッグ用
+        # print("Debug - Context:", context)
         return context
 
 class ProductCreateView(CreateView):

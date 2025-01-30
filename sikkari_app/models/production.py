@@ -15,8 +15,8 @@ class Production(models.Model):
     order_date = models.DateTimeField(_('注文日'))
     manufacture_date = models.DateTimeField(_('製造開始日'))
     manufacture_completion_date = models.DateTimeField(_('製造完了予定日'))
-    actual_completion_date = models.DateTimeField(_('実績完了日'), null=True, blank=True)  # 追加
-    status = models.CharField(                                                          # 追加
+    actual_completion_date = models.DateTimeField(_('実績完了日'), null=True, blank=True)
+    status = models.CharField(
         _('状態'),
         max_length=20,
         choices=STATUS_CHOICES,

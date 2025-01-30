@@ -15,13 +15,13 @@ class OrderListView(ListView):
         queryset = super().get_queryset()
         # フォームの取得とバリデーション
         form = OrderFilterForm(self.request.GET)
-        print("Debug - Form data:", self.request.GET)  # デバッグ用
+        # print("Debug - Form data:", self.request.GET)
 
         if form.is_valid():
             # 検索クエリの処理
             search_query = form.cleaned_data.get('search')
             if search_query:
-                print("Debug - Search query:", search_query)  # デバッグ用
+                # print("Debug - Search query:", search_query)
                 queryset = queryset.filter(
                     Q(order_code__icontains=search_query) |
                     Q(customer_name__icontains=search_query) |
@@ -57,7 +57,7 @@ class OrderCreateView(CreateView):
     model = Order
     form_class = OrderForm
     template_name = 'sikkari_app/order/form.html'
-    success_url = reverse_lazy('sikkari_app:order_list')  # パスを修正
+    success_url = reverse_lazy('sikkari_app:order_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,7 +68,7 @@ class OrderUpdateView(UpdateView):
     model = Order
     form_class = OrderForm
     template_name = 'sikkari_app/order/form.html'
-    success_url = reverse_lazy('sikkari_app:order_list')  # パスを修正
+    success_url = reverse_lazy('sikkari_app:order_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,7 +78,7 @@ class OrderUpdateView(UpdateView):
 class OrderDeleteView(DeleteView):
     model = Order
     template_name = 'sikkari_app/order/delete_confirm.html'
-    success_url = reverse_lazy('sikkari_app:order_list')  # パスを修正
+    success_url = reverse_lazy('sikkari_app:order_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

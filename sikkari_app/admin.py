@@ -14,7 +14,7 @@ class EmployeeAdmin(admin.ModelAdmin):
             obj.password = make_password(obj.password)
         super().save_model(request, obj, form, change)
 
-# 他のモデルも登録
+# GUIでDB確認 モデルの登録
 admin.site.register(Stock)
 admin.site.register(Order)
 admin.site.register(Customer)

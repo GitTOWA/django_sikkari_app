@@ -4,12 +4,12 @@ from .views.auth_views import LoginView, LogoutView
 from .views.menu_views import MenuView
 from .views.order_views import OrderListView, OrderCreateView, OrderUpdateView, OrderDeleteView
 from .views.customer_views import CustomerListView, CustomerCreateView, CustomerUpdateView, CustomerDeleteView
-from .views.production_views import Production, ProductionCreateView, ProductionFilterForm, ProductionForm, ProductionListView, ProductionUpdateView
-from .views.product_views import Product, ProductCreateView, ProductDeleteView, ProductFilterForm, ProductForm, ProductListView, ProductUpdateView
-from .views.stock_views import Stock, StockFilterForm, StockListView
-from .views.shipment_views import Shipment, ShipmentFilterForm, ShipmentListView
-from .views.employee_views import Employee, EmployeeCreateView, EmployeeDeleteView, EmployeeFilterForm, EmployeeForm, EmployeeListView, EmployeeUpdateView
-from .views.department_views import Department, DepartmentCreateView, DepartmentDeleteView, DepartmentListView, DepartmentUpdateView
+from .views.production_views import ProductionCreateView, ProductionListView, ProductionUpdateView
+from .views.product_views import ProductCreateView, ProductDeleteView, ProductListView, ProductUpdateView
+from .views.stock_views import StockListView
+from .views.shipment_views import ShipmentListView
+from .views.employee_views import EmployeeCreateView, EmployeeDeleteView, EmployeeListView, EmployeeUpdateView
+from .views.department_views import DepartmentCreateView, DepartmentDeleteView, DepartmentListView, DepartmentUpdateView
 from .views.aggregation_views import CustomerProductSummaryView
 from .views.history_views import OrderHistoryView
 
@@ -79,18 +79,18 @@ urlpatterns += [
 
 # 所属部署管理
 urlpatterns += [
-    path('departments/', DepartmentListView.as_view(), name='department_list'),
-    path('departments/create/', DepartmentCreateView.as_view(), name='department_create'),
-    path('departments/<int:pk>/update/', DepartmentUpdateView.as_view(), name='department_update'),
-    path('departments/<int:pk>/delete/', DepartmentDeleteView.as_view(), name='department_delete'),
+  path('departments/', DepartmentListView.as_view(), name='department_list'),
+  path('departments/create/', DepartmentCreateView.as_view(), name='department_create'),
+  path('departments/<int:pk>/update/', DepartmentUpdateView.as_view(), name='department_update'),
+  path('departments/<int:pk>/delete/', DepartmentDeleteView.as_view(), name='department_delete'),
 ]
 
+# 
 urlpatterns += [
-    path('aggregation/customer-product/', 
-         CustomerProductSummaryView.as_view(), 
-         name='customer_product_summary'),
+  path('aggregation/customer-product/', CustomerProductSummaryView.as_view(), name='customer_product_summary'),
 ]
 
+# 履歴
 urlpatterns += [
-    path('history/order/', OrderHistoryView.as_view(), name='order_history'),
+  path('history/order/', OrderHistoryView.as_view(), name='order_history'),
 ]

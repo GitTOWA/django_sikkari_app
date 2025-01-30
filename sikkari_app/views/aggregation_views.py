@@ -20,13 +20,13 @@ class CustomerProductSummaryView(TemplateView):
         product_name = self.request.GET.get('product_name', '')
 
         # クエリのデバッグ
-        print("Debug - Parameters:", {
-            'view_type': view_type,
-            'year': year,
-            'month': month,
-            'customer_name': customer_name,
-            'product_name': product_name
-        })
+        # print("Debug - Parameters:", {
+        #     'view_type': view_type,
+        #     'year': year,
+        #     'month': month,
+        #     'customer_name': customer_name,
+        #     'product_name': product_name
+        # })
 
         # 基本のクエリ
         queryset = Order.objects.filter(order_date__year=year)
