@@ -1,14 +1,12 @@
 from django import forms
 from ..models import Customer
 
-# フィルターフォーム
 class CustomerFilterForm(forms.Form):
     search = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={'placeholder': '得意先コード、得意先名で検索'})
     )
 
-# 得意先情報フォーム
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
